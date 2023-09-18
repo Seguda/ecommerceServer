@@ -10,8 +10,10 @@ dotenv.config();
 
 mongoose
   .connect(process.env.Mongo_Url)
+  // eslint-disable-next-line no-console
   .then(() => console.log("Database Connection Successful"))
   .catch((err) => {
+    // eslint-disable-next-line no-console
     console.log(err);
   });
 
@@ -19,6 +21,7 @@ app.use(express.json());
 app.use("/api/auth", authRoute);
 app.use("/api/users", userRoute);
 
-app.listen(process.env.PORT || 5000, () => {
+app.listen(process.env.PORT || 3000, () => {
+  // eslint-disable-next-line no-console
   console.log("Backend Server is running!");
 });
