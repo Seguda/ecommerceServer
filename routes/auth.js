@@ -47,11 +47,18 @@ router.post("/login", async (req, res) => {
     );
     const { password, ...others } = user._doc;
 
-    res.status(200).json({ others, accessToken });
+    res.status(200).json({ ...others, accessToken });
   } catch (err) {
     console.log(err);
     res.status(500).json(err);
   }
+});
+//Logout
+router.delete("/logout", (req, res) => {
+  const refreshToken = req.header("x-auth-token");
+
+  refreshTokens = refreshTokens.filter((token) => token !== refreshToken);
+  res.sendStatus(204);
 });
 
 module.exports = router;
