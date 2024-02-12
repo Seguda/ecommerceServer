@@ -8,6 +8,30 @@ const {
 
 const router = require("express").Router();
 
+//Create
+router.post("/register", verifyToken, async (req, res) => {
+  let user = await User.findOne({ email: req.body.email });
+  if (user) {
+    return res.status(400).send("User already exisits. Please sign in");
+  } else {
+    try {
+      const password = await CryptoJS.AES.encrypt(
+        req.body.password,
+        process.env.Password_Sec
+      ).toString();
+      const user = new User({
+        name: req.body.name,
+        email: req.body.email,
+        password: password,
+      });
+      await user.save();
+      return res.status(201).json(user);
+    } catch (err) {
+      return res.status(400).json({ message: err.message });
+    }
+  }
+});
+
 //Update
 router.put("/:id", verifyTokenAndAuthorization, async (req, res) => {
   if (req.body.password) {
