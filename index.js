@@ -13,18 +13,20 @@ const cors = require("cors");
 dotenv.config();
 
 mongoose
-  .connect(process.env.Mongo_URI)
+  .connect(process.env.Mongo_URL)
   // eslint-disable-next-line no-console
   .then(() => console.log("Database Connection Successful"))
   .catch((err) => {
     // eslint-disable-next-line no-console
     console.log(err);
   });
+
 app.use(
   cors({
     origin: "*", // that will for all like  https / http
   })
 );
+console.log(process.env);
 app.use(cors());
 app.use(express.json());
 app.use("/api/auth", authRoute);
