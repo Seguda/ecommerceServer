@@ -14,7 +14,7 @@ const cors = require("cors");
 dotenv.config();
 
 mongoose
-  .connect(process.env.Mongo_URL)
+  .connect(process.env.Mongo_URI)
   // eslint-disable-next-line no-console
   .then(() => console.log("Database Connection Successful"))
   .catch((err) => {
