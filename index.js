@@ -1,18 +1,21 @@
-import { connect } from "mongoose";
-import express, { json } from "express";
+const mongoose = require("mongoose");
+const express = require("express");
 const app = express();
-import { config } from "dotenv";
-import userRoute from "./routes/user";
-import authRoute from "./routes/auth";
-import productRoute from "./routes/product";
-import cartRoute from "./routes/cart";
-import orderRoute from "./routes/order";
-import stripeRoute from "./routes/stripe";
+const dotenv = require("dotenv");
+const userRoute = require("./routes/user");
+const authRoute = require("./routes/auth");
+const productRoute = require("./routes/product");
+const cartRoute = require("./routes/cart");
+const orderRoute = require("./routes/order");
+const stripeRoute = require("./routes/stripe");
+const cors = require("cors");
+dotenv.config();
 
-import cors from "cors";
-config();
-
-connect(process.env.Mongo_URL)
+mongoose
+  .connect(process.env.Mongo_URL, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
   // eslint-disable-next-line no-console
   .then(() => console.log("Database Connection Successful"))
   .catch((err) => {
@@ -27,7 +30,7 @@ app.use(
 );
 console.log(process.env);
 app.use(cors());
-app.use(json());
+app.use(express.json());
 app.use("/api/auth", authRoute);
 app.use("/api/users", userRoute);
 app.use("/api/products", productRoute);
